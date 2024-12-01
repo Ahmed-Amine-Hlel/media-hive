@@ -1,14 +1,14 @@
-# 🎬 CineTrack
+# 🎬 MediaHive
 
-**CineTrack** is a modern web application designed to help users manage their personal movie and TV show watchlists. Track what you've watched, rate and review your favorite content, and discover new recommendations effortlessly. Built with cutting-edge technologies like Next.js, TypeScript, Tailwind CSS, Node.js, Express, MongoDB, and Firebase, CineTrack offers a seamless and responsive user experience.
+**MediaHive** is a modern web application designed to help users manage their personal movie and TV show watchlists. Track what you've watched, rate and review your favorite content, and discover new recommendations effortlessly. Built with cutting-edge technologies like Next.js, TypeScript, Tailwind CSS, Node.js, Express, MongoDB, and Firebase, MediaHive offers a seamless and responsive user experience.
 
-![CineTrack Banner](docs/images/banner.webp)
+![MediaHive Banner](docs/images/banner.webp)
 
 ---
 
 ## 📋 Table of Contents
 
-- [🎬 CineTrack](#-cinetrack)
+- [🎬 MediaHive](#-MediaHive)
   - [📋 Table of Contents](#-table-of-contents)
   - [🚀 Features](#-features)
     - [🎥 Core Features](#-core-features)
@@ -240,7 +240,7 @@
 
 2. **Access the Application**
 
-   Open your browser and navigate to `http://localhost:3000` to access CineTrack.
+   Open your browser and navigate to `http://localhost:3000` to access MediaHive.
 
 ---
 
