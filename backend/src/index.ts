@@ -6,6 +6,7 @@ import userRoutes from './routes/user/user.route';
 import movieRoutes from './routes/movie/movie.route';
 import actorRoutes from './routes/actor/actor.route';
 import watchedListRoutes from './routes/watchedList/watchedList.route';
+import cors from 'cors';
 
 dotenv.config();
 
@@ -14,6 +15,12 @@ const app: Application = express();
 const PORT = process.env.PORT || 3701;
 
 app.use(express.json());
+app.use(
+    cors({
+        origin: true,
+        credentials: true,
+    })
+);
 app.use(express.urlencoded({extended: true}));
 app.use(morgan('dev'));
 
