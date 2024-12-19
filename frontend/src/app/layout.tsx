@@ -2,6 +2,7 @@ import type {Metadata} from 'next';
 import './globals.css';
 import UserProvider from "@/context/UserContext";
 import ActorProvider from "@/context/ActorContext";
+import MovieProvider from "@/context/MovieContext";
 
 export const metadata: Metadata = {
     title: 'MediaHive',
@@ -18,7 +19,9 @@ export default function RootLayout({
         <body>
         <UserProvider>
             <ActorProvider>
-                {children}
+                <MovieProvider>
+                    {children}
+                </MovieProvider>
             </ActorProvider>
         </UserProvider>
         </body>

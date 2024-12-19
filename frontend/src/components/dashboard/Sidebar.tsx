@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import {FiHome, FiLogOut} from 'react-icons/fi';
-import {useRouter, usePathname} from 'next/navigation';
+import {usePathname} from 'next/navigation';
 import {ReactNode} from "react";
 import {FaUser} from "react-icons/fa6";
 import {MdMovieFilter} from "react-icons/md";
@@ -20,7 +20,6 @@ const navItems: NavItem[] = [
 ];
 
 const Sidebar: React.FC = () => {
-    const router = useRouter();
     const pathname = usePathname();
 
 
