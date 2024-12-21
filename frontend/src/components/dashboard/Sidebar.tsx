@@ -6,6 +6,8 @@ import {usePathname} from 'next/navigation';
 import {ReactNode} from "react";
 import {FaUser} from "react-icons/fa6";
 import {MdMovieFilter} from "react-icons/md";
+import useUser from "@/hooks/user/useUser";
+import {Button} from "@/components/ui/button";
 
 interface NavItem {
     name: string;
@@ -21,6 +23,7 @@ const navItems: NavItem[] = [
 
 const Sidebar: React.FC = () => {
     const pathname = usePathname();
+    const {logout} = useUser();
 
 
     return (
@@ -57,12 +60,13 @@ const Sidebar: React.FC = () => {
             </nav>
 
             <div className="px-4 py-6 border-t border-gray-700">
-                <button
-                    className="flex items-center justify-center w-full px-4 py-3 bg-teal-700 hover:bg-teal-800 text-white rounded-lg transition-colors group"
+                <Button
+                    className="flex items-center justify-center w-full bg-teal-700 hover:bg-teal-800 text-white rounded-lg transition-colors group"
+                    onClick={logout}
                 >
-                    <FiLogOut className="text-xl mr-2 text-white group-hover:text-gray-200"/>
+                    <FiLogOut className="text-xl mr-0.5 text-white group-hover:text-gray-200"/>
                     <span className="text-sm font-medium">Log Out</span>
-                </button>
+                </Button>
             </div>
         </div>
     );

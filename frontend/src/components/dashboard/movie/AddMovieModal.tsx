@@ -45,7 +45,7 @@ const AddMovieModal = () => {
                 .required('Image is required')
         }),
 
-        onSubmit: async (values) => {
+        onSubmit: async (values, {resetForm}) => {
             const {title, description, coverImage, duration, language, rating} = values;
             try {
 
@@ -60,6 +60,7 @@ const AddMovieModal = () => {
                     rating: Number(rating)
                 });
                 saveMovieToState(newMovie);
+                resetForm();
                 setLoading(false);
                 setOpen(false);
                 setLoading(false);

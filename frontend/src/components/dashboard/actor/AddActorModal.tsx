@@ -40,13 +40,14 @@ const AddActorModal = () => {
                 .required('Image is required')
         }),
 
-        onSubmit: async (values) => {
+        onSubmit: async (values, {resetForm}) => {
             const {fullName, dateOfBirth, image} = values;
             try {
                 setError(null);
                 setLoading(true);
                 const newActor = await addActor({fullName, dateOfBirth: new Date(dateOfBirth), image});
                 saveActorToState(newActor);
+                resetForm();
                 setOpen(false);
                 setLoading(false);
             } catch (error) {

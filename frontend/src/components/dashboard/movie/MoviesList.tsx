@@ -56,6 +56,7 @@ const MoviesList = () => {
                             <TableCell>{movie.language}</TableCell>
                             <TableCell>
                                 <ActorsListModal
+                                    movieId={movie.id}
                                     actors={movie.actors}
                                 />
                             </TableCell>

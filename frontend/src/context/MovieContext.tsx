@@ -2,8 +2,9 @@
 
 import {createContext, Dispatch, ReactNode, SetStateAction, useEffect, useMemo, useState} from "react";
 import {Movie} from "@/types/Movie";
-import {getCookie} from "cookies-next";
 import {getMovies} from "@/services/movie/getMovies";
+import {Actor} from "@/types/Actor";
+import useUser from "@/hooks/user/useUser";
 
 
 interface MovieContextProps {
@@ -14,6 +15,8 @@ interface MovieContextProps {
     saveMovieToState: (movie: Movie) => void;
     removeMovieFromState: (id: string) => void;
     updateMoviesState: (id: string, data: Movie) => void;
+    updateMovieActors: (movieId: string, actors: Actor[]) => void;
+    removeActorFromMovie: (movieId: string, actorId: string) => void;
 }
 
 
@@ -22,7 +25,8 @@ export const MovieContext = createContext<MovieContextProps | undefined>(undefin
 
 const MovieProvider = ({children}: { children: ReactNode }) => {
 
-    const token = getCookie('token');
+    const {token} = useUser();
+
     const [loading, setLoading] = useState<boolean>(true);
     const [movies, setMovies] = useState<Movie[]>([]);
 
@@ -44,6 +48,34 @@ const MovieProvider = ({children}: { children: ReactNode }) => {
     const removeMovieFromState = (id: string) => {
         setMovies(prevState => prevState.filter(movie => movie.id !== id));
     }
+
+    const updateMovieActors = useMemo(() => (movieId: string, actors: Actor[]) => {
+        const updatedMovies = movies.map(movie => {
+            if (movie.id === movieId) {
+                return {
+                    ...movie,
+                    actors
+                }
+            }
+            return movie;
+        });
+
+        setMovies(updatedMovies);
+    }, [movies])
+
+    const removeActorFromMovie = useMemo(() => (movieId: string, actorId: string) => {
+        const updatedMovies = movies.map(movie => {
+            if (movie.id === movieId) {
+                return {
+                    ...movie,
+                    actors: movie.actors.filter(actor => actor.id !== actorId)
+                }
+            }
+            return movie;
+        });
+
+        setMovies(updatedMovies);
+    }, [movies]);
 
     useEffect(() => {
 
@@ -74,8 +106,10 @@ const MovieProvider = ({children}: { children: ReactNode }) => {
         setMovies,
         saveMovieToState,
         removeMovieFromState,
-        updateMoviesState
-    }), [loading, movies, updateMoviesState]);
+        updateMoviesState,
+        updateMovieActors,
+        removeActorFromMovie
+    }), [loading, movies, updateMoviesState, updateMovieActors, removeActorFromMovie]);
 
     return (
         <MovieContext.Provider value={value}>

@@ -3,6 +3,7 @@ import './globals.css';
 import UserProvider from "@/context/UserContext";
 import ActorProvider from "@/context/ActorContext";
 import MovieProvider from "@/context/MovieContext";
+import {Toaster} from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
     title: 'MediaHive',
@@ -21,6 +22,7 @@ export default function RootLayout({
             <ActorProvider>
                 <MovieProvider>
                     {children}
+                    <Toaster />
                 </MovieProvider>
             </ActorProvider>
         </UserProvider>

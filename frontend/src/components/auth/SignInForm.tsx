@@ -11,6 +11,7 @@ import {setCookie} from "cookies-next";
 import {calculateMaxAge} from "@/utils/calculateMaxAge";
 import {useRouter} from "next/navigation";
 import {AxiosError} from "axios";
+import useMovie from "@/hooks/movie/useMovie";
 
 
 const SignInForm = () => {
@@ -20,7 +21,8 @@ const SignInForm = () => {
     const router = useRouter();
 
     const {
-        setUser
+        setUser,
+        setToken
     } = useUser();
 
     const formik = useFormik({
@@ -46,6 +48,13 @@ const SignInForm = () => {
                 setAuthError(null);
                 setLoading(true);
                 const response = await loginUser(email, password);
+
+                if (response.user.role !== 'admin') {
+                    setAuthError('Only admins can access this dashboard');
+                    setLoading(false);
+                    return;
+                }
+
                 setUser(response.user);
                 const maxAge = calculateMaxAge(response.token);
                 setCookie('token', response.token, {
@@ -53,6 +62,7 @@ const SignInForm = () => {
                     sameSite: 'strict',
                     maxAge
                 });
+                setToken(response.token);
                 setLoading(false);
 
                 router.push('/');

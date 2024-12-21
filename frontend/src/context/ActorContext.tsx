@@ -2,8 +2,8 @@
 
 import {createContext, Dispatch, ReactNode, SetStateAction, useEffect, useMemo, useState} from "react";
 import {Actor} from "@/types/Actor";
-import {getCookie} from "cookies-next";
 import {getActors} from "@/services/actor/getActors";
+import useUser from "@/hooks/user/useUser";
 
 
 interface ActorContextProps {
@@ -22,8 +22,7 @@ export const ActorContext = createContext<ActorContextProps | undefined>(undefin
 
 const ActorProvider = ({children}: { children: ReactNode }) => {
 
-    const token = getCookie('token');
-
+    const {token} = useUser();
     const [loading, setLoading] = useState<boolean>(true);
     const [actors, setActors] = useState<Actor[]>([]);
 
