@@ -25,7 +25,7 @@ router.post("/", protectUserRoutes, movieValidationRules, validateRequest, saveM
 router.put("/:id", protectUserRoutes, movieValidationRules, validateRequest, updateMovieHandler);
 router.delete("/:id", protectUserRoutes, deleteMovieHandler);
 router.put("/:id/add-actor", protectUserRoutes, addRemoveActorToMovieValidationRules, validateRequest, addActorToMovieHandler);
-router.delete("/:id/remove-actor", protectUserRoutes, addRemoveActorToMovieValidationRules, validateRequest, removeActorFromMovieHandler);
+router.put("/:id/remove-actor", protectUserRoutes, addRemoveActorToMovieValidationRules, validateRequest, removeActorFromMovieHandler);
 router.post("/:id/add-to-watched-list", protectUserRoutes, validateAddMovieToWatchedList, validateRequest, addMovieToWatchedListHandler);
 router.delete("/:id/remove-from-watched-list", protectUserRoutes, removeMovieFromWatchedListHandler);
 

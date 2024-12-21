@@ -18,12 +18,23 @@ export const removeActorFromMovie = async (movieId: string, actorId: string): Pr
             return Promise.reject(new CustomError("Actor not found", 404));
         }
 
+        if (!movie.actors.some((a) => (a._id as Types.ObjectId).toString() === actorId)) {
+            return Promise.reject(new CustomError("Actor does not exist in the movie.", 400));
+        }
+
         movie.actors = movie.actors.filter((a: IActor) => {
             return (a._id as Types.ObjectId).toString() !== (actor._id as Types.ObjectId).toString();
         });
 
         await movie.save();
-        return movie;
+        
+        const populatedMovie = await Movie.findOne({ _id: movieId }).populate('actors');
+
+        if (!populatedMovie) {
+            return Promise.reject(new CustomError("Error retrieving movie after update.", 500));
+        }
+
+        return populatedMovie;
 
     } catch (error: any) {
         return Promise.reject(new CustomError("Unable to remove actor from movie. Please try again later.", 500));

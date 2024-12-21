@@ -24,6 +24,7 @@ export const addActorToMovieHandler = async (req: Request, res: Response): Promi
                         id: actor._id,
                         fullName: actor.fullName,
                         dateOfBirth: actor.dateOfBirth,
+                        image: actor.image,
                         createdAt: actor.createdAt,
                         updatedAt: actor.updatedAt
                     }

@@ -19,11 +19,23 @@ export const addActorToMovie = async (movieId: string, actorId: string): Promise
             return Promise.reject(new CustomError("Actor not found", 404));
         }
 
+        if (movie.actors.some((a) => a.toString() === actorId)) {
+            return Promise.reject(new CustomError("Actor already exists in the movie.", 400));
+        }
+
         movie.actors.push(actor);
 
         await movie.save();
 
-        return movie;
+        // Populate the actors field to return full actor details.
+        const populatedMovie = await Movie.findOne({ _id: movieId }).populate('actors');
+
+        if (!populatedMovie) {
+            return Promise.reject(new CustomError("Error retrieving movie after update.", 500));
+        }
+
+        return populatedMovie;
+
 
     } catch (error: any) {
         return Promise.reject(new CustomError("Unable to add actor to movie. Please try again later.", 500));
