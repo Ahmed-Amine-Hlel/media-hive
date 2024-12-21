@@ -1,14 +1,17 @@
 import {Request, Response} from 'express';
-import {getMovies} from "../../services/movie/get.service";
 import {CustomError} from "../../types/CustomError";
+import {removeGenreFromMovie} from "../../services/movie/removeGenreFromMovie.service";
 
-export const getMoviesHandler = async (req: Request, res: Response): Promise<void> => {
-
+export const removeGenreFromMovieHandler = async (req: Request, res: Response): Promise<void> => {
     try {
-        const movies = await getMovies();
+        const {id} = req.params;
+        const {genreId} = req.body;
 
-        const mappedMovies = movies.map(movie => {
-            return {
+        const movie = await removeGenreFromMovie(id, genreId);
+
+        res.status(200).json({
+            message: "Genre removed from movie successfully",
+            movie: {
                 id: movie.id,
                 title: movie.title,
                 description: movie.description,
@@ -16,14 +19,15 @@ export const getMoviesHandler = async (req: Request, res: Response): Promise<voi
                 duration: movie.duration,
                 language: movie.language,
                 rating: movie.rating,
-                actors: movie.actors.map(actor => {
+                actors: movie.actors.map((actor) => {
                     return {
                         id: actor._id,
                         fullName: actor.fullName,
                         dateOfBirth: actor.dateOfBirth,
+                        image: actor.image,
                         createdAt: actor.createdAt,
                         updatedAt: actor.updatedAt
-                    }
+                    };
                 }),
                 genres: movie.genres.map(genre => {
                     return {
@@ -38,7 +42,6 @@ export const getMoviesHandler = async (req: Request, res: Response): Promise<voi
             }
         });
 
-        res.status(200).json(mappedMovies);
     } catch (error: any) {
         if (error instanceof CustomError) {
             res.status(error.statusCode).json({message: error.message});
@@ -46,5 +49,4 @@ export const getMoviesHandler = async (req: Request, res: Response): Promise<voi
             res.status(500).json({message: "Internal server error. Please try again later."});
         }
     }
-
 }

@@ -29,6 +29,14 @@ export const addActorToMovieHandler = async (req: Request, res: Response): Promi
                         updatedAt: actor.updatedAt
                     }
                 }),
+                genres: movie.genres.map(genre => {
+                    return {
+                        id: genre._id,
+                        name: genre.name,
+                        createdAt: genre.createdAt,
+                        updatedAt: genre.updatedAt
+                    }
+                }),
                 createdAt: movie.createdAt,
                 updatedAt: movie.updatedAt
             }

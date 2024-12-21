@@ -1,33 +1,31 @@
 import {IMovie} from "../../types/Movie";
 import {CustomError} from "../../types/CustomError";
 import Movie from "../../models/movie.model";
-import {IActor} from "../../types/Actor";
-import Actor from "../../models/actor.model";
+import Genre from "../../models/genre.model";
+import {IGenre} from "../../types/IGenre"; // Assuming you have a Genre model
 
-
-export const addActorToMovie = async (movieId: string, actorId: string): Promise<IMovie> => {
+export const addGenreToMovie = async (movieId: string, genreId: string): Promise<IMovie> => {
     try {
 
         const movie: IMovie | null = await Movie.findOne({_id: movieId});
-        const actor: IActor | null = await Actor.findOne({_id: actorId});
+        const genre: IGenre | null = await Genre.findOne({_id: genreId});
 
         if (!movie) {
             return Promise.reject(new CustomError("Movie not found", 404));
         }
 
-        if (!actor) {
-            return Promise.reject(new CustomError("Actor not found", 404));
+        if (!genre) {
+            return Promise.reject(new CustomError("Genre not found", 404));
         }
 
-        if (movie.actors.some((a) => a.toString() === actorId)) {
-            return Promise.reject(new CustomError("Actor already exists in the movie.", 400));
+        if (movie.genres.some((g) => g.toString() === genreId)) {
+            return Promise.reject(new CustomError("Genre already added to the movie.", 400));
         }
 
-        movie.actors.push(actor);
+        movie.genres.push(genre);
 
         await movie.save();
 
-        // Populate the actors field to return full actor details.
         const populatedMovie = await Movie.findOne({_id: movieId})
             .populate('actors')
             .populate('genres');
@@ -38,9 +36,7 @@ export const addActorToMovie = async (movieId: string, actorId: string): Promise
 
         return populatedMovie;
 
-
     } catch (error: any) {
-        return Promise.reject(new CustomError("Unable to add actor to movie. Please try again later.", 500));
+        return Promise.reject(new CustomError("Unable to add genre to movie. Please try again later.", 500));
     }
-
 }

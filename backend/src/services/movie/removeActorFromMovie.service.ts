@@ -28,7 +28,9 @@ export const removeActorFromMovie = async (movieId: string, actorId: string): Pr
 
         await movie.save();
         
-        const populatedMovie = await Movie.findOne({ _id: movieId }).populate('actors');
+        const populatedMovie = await Movie.findOne({ _id: movieId })
+            .populate('actors')
+            .populate('genres');
 
         if (!populatedMovie) {
             return Promise.reject(new CustomError("Error retrieving movie after update.", 500));

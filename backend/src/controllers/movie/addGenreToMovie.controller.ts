@@ -1,14 +1,17 @@
 import {Request, Response} from 'express';
-import {getMovies} from "../../services/movie/get.service";
 import {CustomError} from "../../types/CustomError";
+import {addGenreToMovie} from "../../services/movie/addGenreToMovie.service";
 
-export const getMoviesHandler = async (req: Request, res: Response): Promise<void> => {
-
+export const addGenreToMovieHandler = async (req: Request, res: Response): Promise<void> => {
     try {
-        const movies = await getMovies();
 
-        const mappedMovies = movies.map(movie => {
-            return {
+        const {id} = req.params;
+        const {genreId} = req.body;
+        const movie = await addGenreToMovie(id, genreId);
+
+        res.status(200).json({
+            message: "Genre added to movie successfully",
+            movie: {
                 id: movie.id,
                 title: movie.title,
                 description: movie.description,
@@ -21,6 +24,7 @@ export const getMoviesHandler = async (req: Request, res: Response): Promise<voi
                         id: actor._id,
                         fullName: actor.fullName,
                         dateOfBirth: actor.dateOfBirth,
+                        image: actor.image,
                         createdAt: actor.createdAt,
                         updatedAt: actor.updatedAt
                     }
@@ -38,7 +42,6 @@ export const getMoviesHandler = async (req: Request, res: Response): Promise<voi
             }
         });
 
-        res.status(200).json(mappedMovies);
     } catch (error: any) {
         if (error instanceof CustomError) {
             res.status(error.statusCode).json({message: error.message});
@@ -46,5 +49,4 @@ export const getMoviesHandler = async (req: Request, res: Response): Promise<voi
             res.status(500).json({message: "Internal server error. Please try again later."});
         }
     }
-
 }

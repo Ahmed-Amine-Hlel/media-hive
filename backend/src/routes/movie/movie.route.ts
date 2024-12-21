@@ -15,6 +15,10 @@ import {removeActorFromMovieHandler} from "../../controllers/movie/removeActorFr
 import {addMovieToWatchedListHandler} from "../../controllers/movie/addMovieToWatchedList.controller";
 import {validateAddMovieToWatchedList} from "../../utils/validation/movie/addMovieToWatchedListValidation.validation";
 import {removeMovieFromWatchedListHandler} from "../../controllers/movie/removeMovieFromWatchedList.controller";
+import {genreValidationRules} from "../../utils/validation/genre/validationRules.validation";
+import {addGenreToMovieHandler} from "../../controllers/movie/addGenreToMovie.controller";
+import {removeGenreFromMovieHandler} from "../../controllers/movie/removeGenreFromMovie.controller";
+import {addRemoveGenreToMovieValidationRules} from "../../utils/validation/genre/addRemoveGenreToMovieValidationRules";
 
 
 const router = express.Router();
@@ -26,6 +30,8 @@ router.put("/:id", protectUserRoutes, movieValidationRules, validateRequest, upd
 router.delete("/:id", protectUserRoutes, deleteMovieHandler);
 router.put("/:id/add-actor", protectUserRoutes, addRemoveActorToMovieValidationRules, validateRequest, addActorToMovieHandler);
 router.put("/:id/remove-actor", protectUserRoutes, addRemoveActorToMovieValidationRules, validateRequest, removeActorFromMovieHandler);
+router.put("/:id/add-genre", protectUserRoutes, addRemoveGenreToMovieValidationRules, validateRequest, addGenreToMovieHandler);
+router.put("/:id/remove-genre", protectUserRoutes, addRemoveGenreToMovieValidationRules, validateRequest, removeGenreFromMovieHandler);
 router.post("/:id/add-to-watched-list", protectUserRoutes, validateAddMovieToWatchedList, validateRequest, addMovieToWatchedListHandler);
 router.delete("/:id/remove-from-watched-list", protectUserRoutes, removeMovieFromWatchedListHandler);
 

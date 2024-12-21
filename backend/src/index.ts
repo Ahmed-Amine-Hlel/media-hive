@@ -6,6 +6,8 @@ import userRoutes from './routes/user/user.route';
 import movieRoutes from './routes/movie/movie.route';
 import actorRoutes from './routes/actor/actor.route';
 import watchedListRoutes from './routes/watchedList/watchedList.route';
+import genreRoutes from './routes/genre/genre.route';
+
 import cors from 'cors';
 
 dotenv.config();
@@ -29,6 +31,7 @@ app.use('/api', userRoutes);
 app.use('/api/movie', movieRoutes)
 app.use('/api/actor', actorRoutes);
 app.use('/api/watched-list', watchedListRoutes)
+app.use('/api/genre', genreRoutes);
 
 connectDatabase().then(() => {
     app.listen(PORT, () => {

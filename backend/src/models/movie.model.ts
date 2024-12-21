@@ -51,6 +51,12 @@ const movieSchema = new Schema<IMovie>(
                 ref: "Actor",
             },
         ],
+        genres: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "Genre",
+            },
+        ],
     },
     {timestamps: true}
 );
