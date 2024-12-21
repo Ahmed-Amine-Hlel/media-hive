@@ -8,7 +8,7 @@ const Dashboard = () => {
 
   if (loading) {
     return (
-      <div className="h-screen flex justify-center items-center bg-gray-50">
+      <div className="h-full flex justify-center items-center bg-gray-50">
         <div className="flex items-center space-x-3">
           <div className="w-12 h-12 border-4 border-teal-500 border-t-transparent rounded-full animate-spin"></div>
           <span className="text-lg text-gray-700">Loading...</span>
