@@ -7,6 +7,7 @@ import Image from "next/image";
 import ActorsListModal from "@/components/dashboard/actor/ActorsListModal";
 import DeleteMovieAlert from "@/components/dashboard/movie/DeleteMovieAlert";
 import UpdateMovieModal from "@/components/dashboard/movie/UpdateMovieModal";
+import GenreListModal from "@/components/dashboard/genre/GenreListModal";
 
 const MoviesList = () => {
 
@@ -33,6 +34,7 @@ const MoviesList = () => {
                     <TableHead>Duration</TableHead>
                     <TableHead>Language</TableHead>
                     <TableHead>Actors</TableHead>
+                    <TableHead>Genres</TableHead>
                     <TableHead>Rating</TableHead>
                     <TableHead>Action</TableHead>
                 </TableRow>
@@ -58,6 +60,12 @@ const MoviesList = () => {
                                 <ActorsListModal
                                     movieId={movie.id}
                                     actors={movie.actors}
+                                />
+                            </TableCell>
+                            <TableCell>
+                                <GenreListModal
+                                    movieId={movie.id}
+                                    genres={movie.genres}
                                 />
                             </TableCell>
                             <TableCell>{movie.rating}</TableCell>

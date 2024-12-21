@@ -18,7 +18,7 @@ const Dashboard = () => {
     return (
         <div>
 
-            Welcome to the Dashboard {user?.firstName + ' ' + user?.lastName}
+            Welcome {user?.firstName + ' ' + user?.lastName}
 
         </div>
     );

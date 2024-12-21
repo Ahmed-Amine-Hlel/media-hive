@@ -4,27 +4,20 @@ import {Button} from "@/components/ui/button";
 import {Check, ChevronsUpDown} from "lucide-react";
 import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList} from "@/components/ui/command";
 import {cn} from "@/lib/utils";
-import {Actor} from "@/types/Actor";
-import useActor from "@/hooks/actor/useActor";
+import {Genre} from "@/types/Genre";
+import useGenre from "@/hooks/genre/useGenre";  // Assuming you have a hook for genres
 
-interface SelectActorProps {
+interface SelectGenreProps {
     open: boolean;
     setOpen: Dispatch<SetStateAction<boolean>>;
     value: string;
     setValue: Dispatch<SetStateAction<string>>;
-    actors: Actor[];
+    genres: Genre[];
 }
 
+const SelectGenre = ({setValue, genres, open, setOpen, value}: SelectGenreProps) => {
 
-const SelectActor = ({
-                         setValue,
-                         actors,
-                         open,
-                         setOpen,
-                         value
-                     }: SelectActorProps) => {
-
-    const {actors: allActors} = useActor();
+    const {genres: allGenres} = useGenre(); // Assuming useGenre returns a list of all genres
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
@@ -36,37 +29,37 @@ const SelectActor = ({
                     className="w-full justify-between"
                 >
                     {value
-                        ? allActors.length > 0 && allActors
-                        .filter((actor) => !actors.some((a) => a.id === actor.id))
-                        .find((actor) => actor.id === value)?.fullName
-                        : "Select an actor..."}
+                        ? allGenres.length > 0 && allGenres
+                        .filter((genre) => !genres.some((g) => g.id === genre.id))
+                        .find((genre) => genre.id === value)?.name
+                        : "Select a genre..."}
                     <ChevronsUpDown className="opacity-50"/>
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="w-full p-0">
                 <Command>
-                    <CommandInput placeholder="Search actors..." className="h-9"/>
+                    <CommandInput placeholder="Search genres..." className="h-9"/>
                     <CommandList>
-                        <CommandEmpty>No actor found.</CommandEmpty>
+                        <CommandEmpty>No genre found.</CommandEmpty>
                         <CommandGroup>
                             {
-                                allActors.length > 0 && allActors
-                                    .filter((actor) => !actors.some((a) => a.id === actor.id))
-                                    .map((actor) => (
+                                allGenres.length > 0 && allGenres
+                                    .filter((genre) => !genres.some((g) => g.id === genre.id))
+                                    .map((genre) => (
                                         <CommandItem
-                                            key={actor.id}
-                                            value={actor.id}
+                                            key={genre.id}
+                                            value={genre.id}
                                             onSelect={(currentValue) => {
                                                 setValue(currentValue === value ? "" : currentValue)
                                                 setOpen(false)
                                             }}
                                             className="cursor-pointer"
                                         >
-                                            {actor.fullName}
+                                            {genre.name}
                                             <Check
                                                 className={cn(
                                                     "ml-auto",
-                                                    value === actor.id ? "opacity-100" : "opacity-0"
+                                                    value === genre.id ? "opacity-100" : "opacity-0"
                                                 )}
                                             />
                                         </CommandItem>
@@ -79,4 +72,4 @@ const SelectActor = ({
     );
 };
 
-export default SelectActor;
+export default SelectGenre;

@@ -18,6 +18,9 @@ type ToasterToast = ToastProps & {
   action?: ToastActionElement
 }
 
+
+// disable-eslint
+// eslint-disable-next-line
 const actionTypes = {
   ADD_TOAST: "ADD_TOAST",
   UPDATE_TOAST: "UPDATE_TOAST",

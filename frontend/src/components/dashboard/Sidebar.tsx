@@ -8,6 +8,7 @@ import {FaUser} from "react-icons/fa6";
 import {MdMovieFilter} from "react-icons/md";
 import useUser from "@/hooks/user/useUser";
 import {Button} from "@/components/ui/button";
+import {GrList} from "react-icons/gr";
 
 interface NavItem {
     name: string;
@@ -17,8 +18,9 @@ interface NavItem {
 
 const navItems: NavItem[] = [
     {name: 'Home', href: '/dashboard', icon: <FiHome/>},
-    {name: 'Actors', href: '/dashboard/actors', icon: <FaUser/>},
     {name: 'Movies', href: '/dashboard/movies', icon: <MdMovieFilter/>},
+    {name: 'Actors', href: '/dashboard/actors', icon: <FaUser/>},
+    {name: 'Genres', href: '/dashboard/genres', icon: <GrList/>},
 ];
 
 const Sidebar: React.FC = () => {

@@ -11,7 +11,6 @@ import {setCookie} from "cookies-next";
 import {calculateMaxAge} from "@/utils/calculateMaxAge";
 import {useRouter} from "next/navigation";
 import {AxiosError} from "axios";
-import useMovie from "@/hooks/movie/useMovie";
 
 
 const SignInForm = () => {

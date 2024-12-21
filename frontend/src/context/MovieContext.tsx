@@ -5,6 +5,7 @@ import {Movie} from "@/types/Movie";
 import {getMovies} from "@/services/movie/getMovies";
 import {Actor} from "@/types/Actor";
 import useUser from "@/hooks/user/useUser";
+import {Genre} from "@/types/Genre";
 
 
 interface MovieContextProps {
@@ -17,6 +18,8 @@ interface MovieContextProps {
     updateMoviesState: (id: string, data: Movie) => void;
     updateMovieActors: (movieId: string, actors: Actor[]) => void;
     removeActorFromMovie: (movieId: string, actorId: string) => void;
+    updateMovieGenres: (movieId: string, genres: Genre[]) => void;
+    removeGenreFromMovie: (movieId: string, genreId: string) => void;
 }
 
 
@@ -77,6 +80,36 @@ const MovieProvider = ({children}: { children: ReactNode }) => {
         setMovies(updatedMovies);
     }, [movies]);
 
+    const updateMovieGenres = useMemo(() => (movieId: string, genres: Genre[]) => {
+        const updatedMovies = movies.map(movie => {
+            if (movie.id === movieId) {
+                return {
+                    ...movie,
+                    genres
+                }
+            }
+            return movie;
+        });
+
+        setMovies(updatedMovies);
+    }, [movies])
+
+
+    const removeGenreFromMovie = useMemo(() => (movieId: string, genreId: string) => {
+        const updatedMovies = movies.map(movie => {
+            if (movie.id === movieId) {
+                return {
+                    ...movie,
+                    genres: movie.genres.filter(genre => genre.id !== genreId)
+                }
+            }
+            return movie;
+        });
+
+        setMovies(updatedMovies);
+    }, [movies]);
+
+
     useEffect(() => {
 
         if (!token) {
@@ -108,8 +141,10 @@ const MovieProvider = ({children}: { children: ReactNode }) => {
         removeMovieFromState,
         updateMoviesState,
         updateMovieActors,
-        removeActorFromMovie
-    }), [loading, movies, updateMoviesState, updateMovieActors, removeActorFromMovie]);
+        removeActorFromMovie,
+        updateMovieGenres,
+        removeGenreFromMovie
+    }), [loading, movies, updateMoviesState, updateMovieActors, removeActorFromMovie, updateMovieGenres, removeGenreFromMovie]);
 
     return (
         <MovieContext.Provider value={value}>
